@@ -9,7 +9,7 @@ import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import motivateRoute from './routes/Weather.js';
-import helmet from "helmet";
+import helmet from "helmet"; //pour la securité, on ne renvoie rien lorsqu'on fait une requete
 
 const App = express();
 App.use(morgan('dev'));
