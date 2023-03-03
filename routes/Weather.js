@@ -1,5 +1,5 @@
 import express from "express";
-import motivationModel from "../models/motivation.js";
+import motivationModel from "../models/weather.js";
 
 const Router = express.Router();
 
@@ -10,20 +10,34 @@ const Router = express.Router();
 ];*/
 
 
+/*date: String,
+maxT: mongoose.Decimal128,
+minT: mongoose.Decimal128,
+RH1: Number,
+RH2: Number,
+wind:mongoose.Decimal128,
+rain:mongoose.Decimal128,
+radiation: mongoose.Decimal128*/
 
+// a new weather entry
 Router.post('/', async (request, response) => {
-    const { label } = request.body;
+    const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
 
-    let date = new Date();
 
-    if (label == null || label == "") {
+    /*if (label == null || label == "") {
         return response.status(502).json({msg: "Donnée non conforme"});
-    }
+    }*/ //faire les test 
 
     try {
         const motivation = new motivationModel({
-            label: label,
-            timeStamp: date.toString()
+            date: date,
+            maxT: maxT,
+            minT: minT,
+            RH1: RH1,
+            RH2: RH2,
+            wind: wind,
+            rain: rain,
+            radiation: radiation 
         });
         
         await motivation.save();
@@ -34,6 +48,7 @@ Router.post('/', async (request, response) => {
     }
 });
 
+//get all the weather entries
 Router.get('/', async (request, response) => {
     try{
     let motivates = await motivationModel.find();
@@ -45,7 +60,7 @@ Router.get('/', async (request, response) => {
     }
 });
 
-
+//get one entry by its id
 Router.get('/:id', async (request, response) => {
     let {id} = request.params;
 
@@ -65,29 +80,22 @@ Router.get('/:id', async (request, response) => {
 
 });
 
-Router.get('/random', async (request, response) => {
-
-    
-    try{
-        let motivates = await motivationModel.find();
-
-        let motivate = motivates[Math.floor(Math.random() * motivates.length)];
-        console.log(typeof(motivate));
-
-        return response.status(200).json(motivates); // ca mache pas 
-    }catch(error)
-    {
-        return response.status(500).json({msg: error});
-    }
-});
-
+//update an entry by its id
 Router.put('/:id', async (request, response) => {
     let {id} = request.params;
-    const { label } = request.body;
+    const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
+
     
     try{
         const motivation = await motivationModel.findByIdAndUpdate(id, {
-        label: label
+            date: date,
+            maxT: maxT,
+            minT: minT,
+            RH1: RH1,
+            RH2: RH2,
+            wind: wind,
+            rain: rain,
+            radiation: radiation 
         }, {
         new: true
         });
@@ -100,6 +108,7 @@ Router.put('/:id', async (request, response) => {
     
 });
 
+//delete an entry by its id
 Router.delete('/:id', async (request, response) => {
     let {id} = request.params;
 
@@ -108,7 +117,16 @@ Router.delete('/:id', async (request, response) => {
         _id: id
     });*/
 
-    return response.status(200).json({msg: "Phrase bien supprimer !"});
+    return response.status(200).json({msg: "enregistrement bien supprimé"});
 });
+
+/*faire une route pour avoir un certain jour
+une route pour avoir tout les jours au dessus d'une temperature 
+une route pour en dessous d'une temperature (est que je pourrais commbiner les route de temperature?)
+une route pour avoir un certain moi (toute année confondue)
+une route pour avoir un certain moi d'une certaine année
+une route pour les jours de pluie
+route pour le max et le min overall */
+
 
 export default Router;

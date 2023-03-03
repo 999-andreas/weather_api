@@ -8,7 +8,7 @@ dire_aurevoir();
 import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import motivateRoute from './routes/motivate.js';
+import motivateRoute from './routes/Weather.js';
 import helmet from "helmet";
 
 const App = express();
@@ -32,7 +32,7 @@ App.get('/', (req,res)=>{
     res.send("<h1> C'EST BON</h1>");
 });
 
-App.use('/api/motivate', motivateRoute);
+App.use('/api/weather', motivateRoute);
 
 const PORT = 6546;
 
