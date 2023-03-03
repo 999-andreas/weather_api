@@ -9,6 +9,5 @@ export default mongoose.model('weather', {
     wind:Number,
     rain:Number,
     radiation: Number
-
 });
 
