@@ -16,7 +16,7 @@ App.use(morgan('dev'));
 App.use(helmet());
 App.use(express.json());
 
-mongoose.connect(`mongodb://root:root@127.0.0.1:27017/mydatabase`, {
+mongoose.connect(`mongodb://root:root@127.0.0.1:27017/`, {
     useNewUrlParser: true
 }, (error) => {
     if(error){
