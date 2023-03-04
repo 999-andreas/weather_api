@@ -127,10 +127,8 @@ Router.get('/date/:date', async (request, response) => {
 
 Router.get('/hotter/:temp', async (request, response) => {
 
-    let tempf = parseFloat(request.params.temp)
-
     try{
-        let motivate = await motivationModel.find({"maxT": {$gt:tempf} });
+        let motivate = await motivationModel.find({maxT: {$gt:request.params.temp} });
         return response.status(200).json(motivate);
     }catch(error)
     {
@@ -138,13 +136,46 @@ Router.get('/hotter/:temp', async (request, response) => {
     }
 });
 
-/*faire une route pour avoir un certain jour
-une route pour avoir tout les jours au dessus d'une temperature 
-une route pour en dessous d'une temperature (est que je pourrais commbiner les route de temperature?)
-une route pour avoir un certain moi (toute année confondue)
+Router.get('/colder/:temp', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find({minT: {$lt:request.params.temp} });
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});
+
+Router.get('/rain', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find({rain: {$gt: 0.0 } });
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});
+
+
+
+/*faire une route pour avoir un certain jour //
+une route pour avoir tout les jours au dessus d'une temperature //
+une route pour en dessous d'une temperature (est que je pourrais commbiner les route de temperature?) //
+une route pour avoir une seule année 
+(une route pour avoir un certain moi (toute année confondue))pas beaucou de sens
 une route pour avoir un certain moi d'une certaine année
 une route pour les jours de pluie
-route pour le max et le min overall */
+route pour le max et le min overall 
+une route pour le dernier enregistrement
+
+mettre la date en format Date pour que ça soit plus facile a manip
+faire tout les blindages
+peut etre implementer plusieurs station meteo
+peut etre faire une collection par station
+systeme d'utilisateur ou plutot de station meteo
+*/
 
 
 export default Router;
