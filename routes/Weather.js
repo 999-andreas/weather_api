@@ -10,15 +10,6 @@ const Router = express.Router();
 ];*/
 
 
-/*date: String,
-maxT: mongoose.Decimal128,
-minT: mongoose.Decimal128,
-RH1: Number,
-RH2: Number,
-wind:mongoose.Decimal128,
-rain:mongoose.Decimal128,
-radiation: mongoose.Decimal128*/
-
 // a new weather entry
 Router.post('/', async (request, response) => {
     const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
@@ -118,6 +109,33 @@ Router.delete('/:id', async (request, response) => {
     });*/
 
     return response.status(200).json({msg: "enregistrement bien supprimé"});
+});
+
+// get an entry by its date
+Router.get('/date/:date', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.findOne({date: request.params.date});
+
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+
+});
+
+Router.get('/hotter/:temp', async (request, response) => {
+
+    let tempf = parseFloat(request.params.temp)
+
+    try{
+        let motivate = await motivationModel.find({"maxT": {$gt:tempf} });
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
 });
 
 /*faire une route pour avoir un certain jour
