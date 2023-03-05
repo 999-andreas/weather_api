@@ -52,7 +52,7 @@ Router.get('/', async (request, response) => {
 });
 
 //get one entry by its id
-Router.get('/:id', async (request, response) => {
+Router.get('/find/:id', async (request, response) => {
     let {id} = request.params;
 
     /*if(typeof(id) != "number")
@@ -72,7 +72,7 @@ Router.get('/:id', async (request, response) => {
 });
 
 //update an entry by its id
-Router.put('/:id', async (request, response) => {
+Router.put('/update/:id', async (request, response) => {
     let {id} = request.params;
     const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
 
@@ -100,7 +100,7 @@ Router.put('/:id', async (request, response) => {
 });
 
 //delete an entry by its id
-Router.delete('/:id', async (request, response) => {
+Router.delete('/delete/:id', async (request, response) => {
     let {id} = request.params;
 
     await motivationModel.findByIdAndDelete(id);
@@ -166,15 +166,17 @@ une route pour en dessous d'une temperature (est que je pourrais commbiner les r
 une route pour avoir une seule année 
 (une route pour avoir un certain moi (toute année confondue))pas beaucou de sens
 une route pour avoir un certain moi d'une certaine année
-une route pour les jours de pluie
+une route pour les jours de pluie //
 route pour le max et le min overall 
 une route pour le dernier enregistrement
 
-mettre la date en format Date pour que ça soit plus facile a manip
+mettre la date en format Date pour que ça soit plus facile a manip / update: c'est chiant, jsp pk c'est pas constant le format de la date, a creser
 faire tout les blindages
 peut etre implementer plusieurs station meteo
 peut etre faire une collection par station
 systeme d'utilisateur ou plutot de station meteo
+faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique
+faire en sorte que je soit pas obligé de mettre des sous route truc la : '/truc/recherche'
 */
 
 
