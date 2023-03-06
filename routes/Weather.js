@@ -158,6 +158,18 @@ Router.get('/rain', async (request, response) => {
     }
 });
 
+/* dinguerie les dates, c'est un enfer, il faut vraiment que je mette en place le format date mais ça merde a chaque fois
+Router.get('/year/:year', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find({rain: });
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});*/
+
 
 
 /*faire une route pour avoir un certain jour //
@@ -170,12 +182,12 @@ une route pour les jours de pluie //
 route pour le max et le min overall 
 une route pour le dernier enregistrement
 
-mettre la date en format Date pour que ça soit plus facile a manip / update: c'est chiant, jsp pk c'est pas constant le format de la date, a creser
+mettre la date en format Date pour que ça soit plus facile a manip / update: c'est chiant, jsp pk c'est pas constant le format de la date, a creser // c'est bon, juste les heures c'est chelou
 faire tout les blindages
 peut etre implementer plusieurs station meteo
 peut etre faire une collection par station
 systeme d'utilisateur ou plutot de station meteo
-faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique
+faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique // je crois que ca le fait tout seule 
 faire en sorte que je soit pas obligé de mettre des sous route truc la : '/truc/recherche'
 */
 
