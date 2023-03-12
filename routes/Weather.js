@@ -191,22 +191,44 @@ Router.get('/last-30', async (request, response) => {
     }
 });
 
+Router.get('/hottest', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find().sort({ maxT: -1 }).limit(1);
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});
+
+Router.get('/coldest', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find().sort({ minT: 1 }).limit(1);
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});
 
 
 /*faire une route pour avoir un certain jour //
 une route pour avoir tout les jours au dessus d'une temperature //
 une route pour en dessous d'une temperature (est que je pourrais commbiner les route de temperature?) //
 une route pour avoir une seule année //
-(une route pour avoir un certain moi (toute année confondue))pas beaucou de sens
-une route pour avoir un certain moi d'une certaine année 
+(une route pour avoir un certain moi (toute année confondue))pas une prio
+une route pour avoir un certain moi d'une certaine année pas une prio
 une route pour les jours de pluie //
-route pour le max et le min overall 
-une route pour le dernier enregistrement
+route pour le max et le min overall //
+une route pour le dernier enregistrement // j'ai fait les 30 derniers
 
 faire tout les blindages 
 peut etre implementer plusieurs station meteo
 peut etre faire une collection par station
-systeme d'utilisateur ou plutot de station meteo
+systeme d'utilisateur ou plutot de station meteo :
+-faire en sorte qu'on puisse pas tous crée des enregistrement et update
 faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique // je crois que ca le fait tout seule 
 faire en sorte que je soit pas obligé de mettre des sous route truc la : '/truc/recherche'
 */
