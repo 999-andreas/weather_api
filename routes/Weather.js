@@ -111,11 +111,12 @@ Router.delete('/delete/:id', async (request, response) => {
     return response.status(200).json({msg: "enregistrement bien supprimé"});
 });
 
-// get an entry by its date
 Router.get('/date/:date', async (request, response) => {
+    var date = new Date(request.params.date);
+    console.log(date);
 
     try{
-        let motivate = await motivationModel.findOne({date: request.params.date});
+        let motivate = await motivationModel.findOne({date: date});
 
         return response.status(200).json(motivate);
     }catch(error)
@@ -158,32 +159,51 @@ Router.get('/rain', async (request, response) => {
     }
 });
 
-/* dinguerie les dates, c'est un enfer, il faut vraiment que je mette en place le format date mais ça merde a chaque fois
-Router.get('/year/:year', async (request, response) => {
+Router.get('/year/:annee', async (request, response) => {
+
+    const annee = request.params.annee;
+
+    // création de la date de début et de fin pour l'année donnée
+    /*
+    const dateDebut = new Date(annee, 0, 1);
+    const dateFin = new Date(annee, 11, 31);
+    console.log(dateDebut);
+    console.log(dateFin);*/
+
 
     try{
-        let motivate = await motivationModel.find({rain: });
+        let motivate = await motivationModel.find({date: { $gte: new Date(annee, 0, 1), $lte: new Date(annee, 11, 31) }});
         return response.status(200).json(motivate);
     }catch(error)
     {
         return response.status(500).json({msg: error});
     }
-});*/
+});
+
+Router.get('/last-30', async (request, response) => {
+
+    try{
+        let motivate = await motivationModel.find().sort({ _id: -1 }).limit(30);
+        return response.status(200).json(motivate);
+    }catch(error)
+    {
+        return response.status(500).json({msg: error});
+    }
+});
 
 
 
 /*faire une route pour avoir un certain jour //
 une route pour avoir tout les jours au dessus d'une temperature //
 une route pour en dessous d'une temperature (est que je pourrais commbiner les route de temperature?) //
-une route pour avoir une seule année 
+une route pour avoir une seule année //
 (une route pour avoir un certain moi (toute année confondue))pas beaucou de sens
-une route pour avoir un certain moi d'une certaine année
+une route pour avoir un certain moi d'une certaine année 
 une route pour les jours de pluie //
 route pour le max et le min overall 
 une route pour le dernier enregistrement
 
-mettre la date en format Date pour que ça soit plus facile a manip / update: c'est chiant, jsp pk c'est pas constant le format de la date, a creser // c'est bon, juste les heures c'est chelou
-faire tout les blindages
+faire tout les blindages 
 peut etre implementer plusieurs station meteo
 peut etre faire une collection par station
 systeme d'utilisateur ou plutot de station meteo

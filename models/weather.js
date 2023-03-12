@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export default mongoose.model('weather', {
-    date: String,
+    date: Date,
     maxT: Number,
     minT: Number,
     RH1: Number,
