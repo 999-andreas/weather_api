@@ -9,9 +9,17 @@ const Router = express.Router();
     "Et encore un problème de résolu !"
 ];*/
 
+const isAdmin = (req, res, next) => {
+    if (req.session.isAdmin) {
+      return next();
+    } else {
+      res.status(403).send('Forbidden');
+    }
+  };
+
 
 // a new weather entry
-Router.post('/', async (request, response) => {
+Router.post('/',isAdmin, async(request, response) => {
     const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
 
 
@@ -72,7 +80,7 @@ Router.get('/find/:id', async (request, response) => {
 });
 
 //update an entry by its id
-Router.put('/update/:id', async (request, response) => {
+Router.put('/update/:id', isAdmin, async(request, response) => {
     let {id} = request.params;
     const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
 
@@ -100,7 +108,7 @@ Router.put('/update/:id', async (request, response) => {
 });
 
 //delete an entry by its id
-Router.delete('/delete/:id', async (request, response) => {
+Router.delete('/delete/:id', isAdmin, async(request, response) => {
     let {id} = request.params;
 
     await motivationModel.findByIdAndDelete(id);
@@ -229,8 +237,9 @@ peut etre implementer plusieurs station meteo
 peut etre faire une collection par station
 systeme d'utilisateur ou plutot de station meteo :
 -faire en sorte qu'on puisse pas tous crée des enregistrement et update
-faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique // je crois que ca le fait tout seule 
-faire en sorte que je soit pas obligé de mettre des sous route truc la : '/truc/recherche'
+
+faire en sorte que quand on fait une recherche ça soit toujours dans l'ordre chrononogique //ca le fait tout seule 
+faire en sorte que je soit pas obligé de mettre des sous route truc la : '/truc/recherche'//c'est pas comment on fait
 */
 
 

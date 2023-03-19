@@ -8,13 +8,26 @@ dire_aurevoir();
 import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import motivateRoute from './routes/Weather.js';
 import helmet from "helmet"; //pour la securité, on ne renvoie rien lorsqu'on fait une requete
+import session from 'express-session'
+
+import motivateRoute from './routes/Weather.js';
+import authRoute from './routes/auth.js';
+
 
 const App = express();
 App.use(morgan('dev'));
 App.use(helmet());
 App.use(express.json());
+App.use(session({
+    secret: 'wojak man',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        httpOnly: true,
+        secure: false
+    }
+}));
 
 mongoose.connect(`mongodb://root:root@127.0.0.1:27017`,{
     dbName : 'mydatabase',
@@ -33,6 +46,9 @@ App.get('/', (req,res)=>{
 });
 
 App.use('/api/weather', motivateRoute);
+App.use('/api', authRoute);
+
+
 
 const PORT = 6546;
 
