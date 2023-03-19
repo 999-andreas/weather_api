@@ -17,6 +17,8 @@ const isAdmin = (req, res, next) => {
     }
   };
 
+/*il faudra un autre middlewear pour tester la correspodance avec la clé, jsp comment je peux tester ça */
+
 
 // a new weather entry
 Router.post('/',isAdmin, async(request, response) => {
@@ -119,6 +121,7 @@ Router.delete('/delete/:id', isAdmin, async(request, response) => {
     return response.status(200).json({msg: "enregistrement bien supprimé"});
 });
 
+//find an entry by its date
 Router.get('/date/:date', async (request, response) => {
     var date = new Date(request.params.date);
     console.log(date);

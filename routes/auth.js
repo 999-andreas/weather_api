@@ -29,4 +29,8 @@ Router.get('/logout', (req, res) => {
     return res.status(200).json({msg: "Vous est déconnecté !"});
 })
 
+
+/*ici il faudrait faire une autre collection pour avoir la liste des utilisateur
+après on test au login si il existe, et on leur donne leur "clé" d'accès à leur collection de donnée*/
+
 export default Router;

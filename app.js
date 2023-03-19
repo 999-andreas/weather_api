@@ -11,8 +11,9 @@ import morgan from "morgan";
 import helmet from "helmet"; //pour la securité, on ne renvoie rien lorsqu'on fait une requete
 import session from 'express-session'
 
-import motivateRoute from './routes/Weather.js';
+import weatherRoute from './routes/Weather.js';
 import authRoute from './routes/auth.js';
+import weather from "./models/weather.js";
 
 
 const App = express();
@@ -45,9 +46,12 @@ App.get('/', (req,res)=>{
     res.send("<h1> C'EST BON</h1>");
 });
 
-App.use('/api/weather', motivateRoute);
+App.use('/api/weather', weatherRoute);
 App.use('/api', authRoute);
-
+App.use('/api/Paris',weatherRoute);
+//rajouter une route pour chaque station autre station
+//il faudrait un moyen de factoriser cette étape des routes
+//je suis pas sûr si c'est possible de ce connecter à une autre collection sur la base de donnée aussi facilement
 
 
 const PORT = 6546;
