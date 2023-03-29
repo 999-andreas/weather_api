@@ -49,9 +49,6 @@ App.get('/', (req,res)=>{
 App.use('/api/weather', weatherRoute);
 App.use('/api', authRoute);
 App.use('/api/Paris',weatherRoute);
-//rajouter une route pour chaque station autre station
-//il faudrait un moyen de factoriser cette étape des routes
-//je suis pas sûr si c'est possible de ce connecter à une autre collection sur la base de donnée aussi facilement
 
 
 const PORT = 6546;
