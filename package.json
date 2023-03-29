@@ -16,6 +16,7 @@
     "express-session": "^1.17.3",
     "git": "^0.1.5",
     "helmet": "^6.0.1",
+    "install": "^0.13.0",
     "mongo-express": "^1.0.0",
     "mongoose": "^6.10.0",
     "morgan": "^1.10.0"
