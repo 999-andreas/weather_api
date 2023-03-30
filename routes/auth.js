@@ -1,6 +1,7 @@
 import express from 'express';
-require('dotenv').config();
+import dotenv from 'dotenv';
 
+dotenv.config();
 const Router = express.Router();
 
 Router.post('/login', (req, res) => {
