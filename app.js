@@ -30,23 +30,15 @@ App.use(session({
     }
 }));
 
-try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/mydatabase');
-  } catch (error) {
-    handleError(error);
-  }
-/*
-mongoose.connect(`mongodb://root:root@127.0.0.1:27017`,{
-    dbName : 'mydatabase',
-    useNewUrlParser: true
-}, (error) => {
-    if(error){
-        console.log(`error:`+error);
 
-    }else{
-        console.log("DB connect");
-    }
-});*/
+mongoose.connect('mongodb://root:root@127.0.0.1:27017/', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('DB connect'))
+.catch((error) => console.log('error:', error));
+
+
 
 App.get('/', (req,res)=>{
     res.send("<h1> C'EST BON</h1>");

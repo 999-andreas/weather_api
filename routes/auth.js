@@ -7,7 +7,7 @@ const Router = express.Router();
 Router.post('/login', (req, res) => {
     const {email, password} = req.body;
 
-    if (email == "admin" && password == process.env.ADMIN_PASSWORD) {
+    if (email == "admin" && password == "admin") {
         req.session.isAdmin = true;
         return res.status(200).json(req.session.isAdmin);
     }
