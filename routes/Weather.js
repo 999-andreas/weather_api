@@ -21,7 +21,7 @@ const isAdmin = (req, res, next) => {
 
 
 // a new weather entry
-Router.post('/',isAdmin, async(request, response) => {
+Router.post('/', async(request, response) => {
     const { temp,hum } = request.body;
 
 
