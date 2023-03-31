@@ -22,7 +22,7 @@ const isAdmin = (req, res, next) => {
 
 // a new weather entry
 Router.post('/',isAdmin, async(request, response) => {
-    const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
+    const { temp,hum } = request.body;
 
 
     /*if (label == null || label == "") {
@@ -31,14 +31,8 @@ Router.post('/',isAdmin, async(request, response) => {
 
     try {
         const motivation = new motivationModel({
-            date: date,
-            maxT: maxT,
-            minT: minT,
-            RH1: RH1,
-            RH2: RH2,
-            wind: wind,
-            rain: rain,
-            radiation: radiation 
+            temp: temp,
+            hum: hum
         });
         
         await motivation.save();
@@ -84,19 +78,13 @@ Router.get('/find/:id', async (request, response) => {
 //update an entry by its id
 Router.put('/update/:id', isAdmin, async(request, response) => {
     let {id} = request.params;
-    const { date,maxT,minT,RH1,RH2,wind,rain,radiation } = request.body;
+    const { temp,hum } = request.body;
 
     
     try{
         const motivation = await motivationModel.findByIdAndUpdate(id, {
-            date: date,
-            maxT: maxT,
-            minT: minT,
-            RH1: RH1,
-            RH2: RH2,
-            wind: wind,
-            rain: rain,
-            radiation: radiation 
+            temp: temp,
+            hum: hum
         }, {
         new: true
         });
@@ -140,7 +128,7 @@ Router.get('/date/:date', async (request, response) => {
 Router.get('/hotter/:temp', async (request, response) => {
 
     try{
-        let motivate = await motivationModel.find({maxT: {$gt:request.params.temp} });
+        let motivate = await motivationModel.find({temp: {$gt:request.params.temp} });
         return response.status(200).json(motivate);
     }catch(error)
     {
@@ -151,7 +139,7 @@ Router.get('/hotter/:temp', async (request, response) => {
 Router.get('/colder/:temp', async (request, response) => {
 
     try{
-        let motivate = await motivationModel.find({minT: {$lt:request.params.temp} });
+        let motivate = await motivationModel.find({temp: {$lt:request.params.temp} });
         return response.status(200).json(motivate);
     }catch(error)
     {
@@ -159,6 +147,7 @@ Router.get('/colder/:temp', async (request, response) => {
     }
 });
 
+/*
 Router.get('/rain', async (request, response) => {
 
     try{
@@ -168,7 +157,7 @@ Router.get('/rain', async (request, response) => {
     {
         return response.status(500).json({msg: error});
     }
-});
+});*/
 
 Router.get('/year/:annee', async (request, response) => {
 
@@ -205,7 +194,7 @@ Router.get('/last-30', async (request, response) => {
 Router.get('/hottest', async (request, response) => {
 
     try{
-        let motivate = await motivationModel.find().sort({ maxT: -1 }).limit(1);
+        let motivate = await motivationModel.find().sort({ temp: -1 }).limit(1);
         return response.status(200).json(motivate);
     }catch(error)
     {
@@ -216,7 +205,7 @@ Router.get('/hottest', async (request, response) => {
 Router.get('/coldest', async (request, response) => {
 
     try{
-        let motivate = await motivationModel.find().sort({ minT: 1 }).limit(1);
+        let motivate = await motivationModel.find().sort({ temp: 1 }).limit(1);
         return response.status(200).json(motivate);
     }catch(error)
     {
