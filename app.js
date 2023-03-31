@@ -30,6 +30,12 @@ App.use(session({
     }
 }));
 
+try {
+    await mongoose.connect('mongodb://127.0.0.1:27017/mydatabase');
+  } catch (error) {
+    handleError(error);
+  }
+/*
 mongoose.connect(`mongodb://root:root@127.0.0.1:27017`,{
     dbName : 'mydatabase',
     useNewUrlParser: true
@@ -40,7 +46,7 @@ mongoose.connect(`mongodb://root:root@127.0.0.1:27017`,{
     }else{
         console.log("DB connect");
     }
-});
+});*/
 
 App.get('/', (req,res)=>{
     res.send("<h1> C'EST BON</h1>");
