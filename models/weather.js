@@ -5,7 +5,7 @@ export default mongoose.model('weather', {
     date: Date,
     temp: Number,
     hum: Number,
-    time:timeStamp
+    timeStamp: { type: Date, default: Date.now }
 });
 
 /*peut etre rajouter une partie meta pour mettre la date d'ajout de l'enregistrement et le user qui l'a entre*/
