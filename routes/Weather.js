@@ -180,10 +180,10 @@ Router.get('/year/:annee', async (request, response) => {
     }
 });
 
-Router.get('/last-30', async (request, response) => {
+Router.get('/last/:limit', async (request, response) => {
 
     try{
-        let motivate = await motivationModel.find().sort({ _id: -1 }).limit(30);
+        let motivate = await motivationModel.find().sort({ _id: -1 }).limit(request.params.annee);
         return response.status(200).json(motivate);
     }catch(error)
     {
